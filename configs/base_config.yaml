@@ -1,0 +1,90 @@
+# defaults are sensible starting values, same as used in the gnca/wireworld experiments
+
+experiment:
+  name: 'output will be placed in a subdir with this name'
+  seed: 12                       # random seed for reproducibility
+  comment: 'comment is added to logs, no effect on training'
+
+model:
+  alive_threshold: 0.1           # default 0.1
+  fire_rate: 0.5                 # default 0.5
+  landmarks:
+    type: 'none'
+    # type: 'dots'
+    # params:
+    #   spacing: 8  
+    #   value: 1.0
+    # type: 'coordinate'
+    # params:
+    #   normalise: true
+  num_hidden: 12                 # default 12
+  seed_alpha: 1.0                # default 1.0
+  step_size: 1.0                 # default 1.0
+
+target:
+  target_size: 40                # images will be resized to this when using continuous mode
+  target_padding: 16             # default 16
+  target_image: data/targets/test/24x24-1.png   # target image for training
+  # target_emoji: '🥨'           # loaded from google noto emoji repo
+
+training:
+  batch_size: 8                  # default 8
+  early_stopping:                # parameters for early stopping have not been tuned.
+    enabled: false
+    measure: 'accuracy'          # options: loss, mse, accuracy, accuracy_snap
+    warmup_steps: 500
+    patience: 250
+    min_delta: 5e-4
+    window_size: 100
+  epsilon: 1e-7                  # default 1e-7
+  learning_rate: 2e-3            # 2e-3 default
+  mode: 'continuous'             # options: 'discrete', 'continuous'
+  num_steps: 8001                # default 8001
+  num_to_damage: 0               # 3 is default for regen, otherwise 0
+  optimizer: 'adam'              # hardcoded - cannot change this atm.
+  # pool_commit_tolerance: 0.1     # not used in this version
+  pool_size: 1024                # default 0 for growing, 1024 for persisting/regen
+  replace_with_seed: 1           # default 1
+  rollout:
+    min: 64                     # default 64, test bound 1.6 x size is reasonable starting value
+    max: 96                     # default 96, test bound 2.4 x size is reasonable starting value  
+  supervise_wireworld: false    # not used
+  scheduler:
+    milestones: [2000]          # default [2000], list of steps at which to reduce lr by decay factor
+    decay_factor: 0.1           # default 0.1
+
+misc:
+  debug: false
+  preview_target_image: false   # displays target image in matplotlib window before training
+
+results:
+  output_dir: 'results'         # base directory for storing config, images, logging
+  metrics:
+    interval: 1000              # json log metrics every n steps
+  model_checkpoint:
+    interval: 1000              # save model checkpoint every n steps
+  pool_images:
+    enabled: true               # save images of pool members
+    interval: 100               # every n steps
+    video: true                 # produce pool video from pool_images
+    fps: 10
+  batch_images:                 # save images of training batch
+    enabled: true
+    interval: 100               # every n steps
+  ca_rollout:                   # produce ca rollout video
+    ca_steps: 1200              # number of ca steps to rollout and record
+    enabled: true               # enable video generation
+    fps: 30                     # frames per second for video
+    use_best_checkpoint: false  # default false, uses last checkpoint
+  channel_strip:                # visualise channel states for one training step
+    cmap_name: 'viridis'        # colormap for channel strip
+    enabled: false              # enable channel strip generation
+    for_train_step: 0           # which training step to visualise
+    font_size: 8
+    interval: 1
+    spacing: 4
+
+compute:
+  requested_device: 'auto'      # 'auto', 'cpu', or 'cuda'
+  num_threads: 4                # number of CPU threads to use
+  mixed_precision: true

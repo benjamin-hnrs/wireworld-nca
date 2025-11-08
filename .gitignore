@@ -1,0 +1,30 @@
+# environment variables
+.env
+.env.local
+.env.*.local
+*.env
+# keep example env files
+!.env.example
+!.env.template
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# distribution/packaging
+*.egg
+*.egg-info/
+
+# results
+results/
+
+# system files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,23 @@
+{
+  "steps": 192,
+  "save_every": 10,
+  "run_idx": 9,
+  "rng_seed": 10,
+  "x0_shape": [
+    1,
+    16,
+    72,
+    72
+  ],
+  "target_shape": [
+    1,
+    4,
+    72,
+    72
+  ],
+  "params": 8320,
+  "timestamp": "2025-09-29 17:00:20",
+  "device": "cpu",
+  "mode": "continuous",
+  "model_config": "num_hidden: 12\nfire_rate: 0.5\nalive_threshold: 0.1\nstep_size: 1.0\nseed_alpha: 1.0\nnum_visible: 3\n"
+}
